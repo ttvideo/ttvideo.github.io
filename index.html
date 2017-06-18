@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="utf-8">
+    <title>今日头条、西瓜视频解析下载 - 保存视频到本地</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="今日头条、西瓜视频解析下载工具支持解析今日头条和西瓜视频以及阳关宽频网里的视频真实地址,并支持下载视频和视频封面到本地.">
+    <meta name="keywords" content="下载今日头条视频,下载西瓜视频,阳关宽频网视频下载,保存今日头条视频到手机,下载西瓜视频到电脑,今日头条西瓜视频解析">
+    <meta name="application-name" content="今日头条西瓜视频解析下载">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <link href="http://apps.bdimg.com/libs/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet">
+    <link href="http://kuaishou.iiilab.com/static/css/site.min.css?v3" rel="stylesheet">
+    <link rel="shortcut icon" href="/static/img/favicon.ico">
+    <style type="text/css">
+        .container .navbar-header .logo-img {
+            width: 52px;
+            height: 52px;
+            margin-left: 15px;
+            float: left;
+            display: inline-block;
+            background: url(/static/img/logo.png) no-repeat;
+            background-size: contain;
+            background: 0 0\9;
+            filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='/static/img/logo.png', sizingMethod='scale');
+        }
+        @media (min-width: 768px) {
+            .container .navbar-header .logo-img {margin-left: 0;}
+        }
+    </style>
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+    <script src="https://cdn.staticfile.org/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <script src="https://cdn.staticfile.org/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body>
+
+<div class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <span class="logo-img"></span>
+            <a class="navbar-brand hidden-sm" href="/">今日头条西瓜视频解析下载</a>
+        </div>
+        <div class="navbar-collapse collapse" role="navigation">
+            <ul class="nav navbar-nav">
+                <li><a href="http://weibo.iiilab.com/" onclick="ga('send', 'event', 'nav', 'nav-weibo')">微博秒拍视频解析下载</a></li>
+                <li><a href="http://huoshan.iiilab.com/" onclick="ga('send', 'event', 'nav', 'nav-huoshan')">火山小视频解析下载</a></li>
+                <li><a href="http://kuaishou.iiilab.com/" onclick="ga('send', 'event', 'nav', 'nav-kuaishou')">快手视频解析下载</a></li>
+            </ul>
+            <!--<ul class="nav navbar-nav navbar-right">-->
+                <!--<li><a href="http://kuaishou.iiilab.com/" target="_blank">快手视频下载</a></li>-->
+            <!--</ul>-->
+        </div>
+    </div>
+</div>
+<div class="container" id="app" style="margin-top: 70px;">
+    <div class="row">
+        <div class="col-md-12">
+
+            <div style="margin-bottom: 20px;">
+                <p>本页面仅支持解析<b>今日头条</b>和<b>西瓜视频</b>以及<b>阳关宽频网</b>视频地址, 如果要解析其他网站视频, 请通过页面顶部<span class="visible-xs-inline">右侧</span>导航菜单选择.</p>
+            </div>
+
+            <div class="input-group input-group-lg" style="margin-bottom: 10px;">
+                  <input v-model.trim="link" @keyup.enter="submit" type="text" class="form-control" placeholder="请输入视频地址,如: http://www.toutiao.com/a6423491700546601473">
+                  <span class="input-group-btn">
+                    <button class="btn btn-default" :class="submitBtnClass" type="button" @click="submit">解析视频</button>
+                  </span>
+            </div>
+
+            <div v-cloak v-if="errorTip" style="text-align: center;" class="alert alert-danger" role="alert">{{errorTip}}</div>
+
+            <div v-cloak v-if="submitBtnClass.disabled" style="text-align: center;"><img src="/static/img/loading.gif" style="width: 80px;height: 80px;"></div>
+
+            <div v-cloak v-if="requestSuccess">
+                    <div class="thumbnail">
+                        <div class="caption" style="padding:5px 0 0;">
+                            <p style="text-align: center;">
+                                <a target="_blank" v-for="(item, index) in requestResult.video.download" :href="item.url" class="btn btn-success" @click="gaga('download', index)" download="火山小视频解析下载.mp4">
+                                    {{ item.type + "视频下载" }}
+                                </a>
+                            </p>
+                            <p style="word-break: break-all;"><span class="label label-default">视频名称</span> {{requestResult.text}}</p>
+                            <p style="word-break: break-all;"><span class="label label-default">视频地址</span>
+                                <a target="_blank" v-for="(item, index) in requestResult.video.link" :href="item.url" @click="gaga('video-link', index)" class="label label-success">
+                                    {{ item.buttonText }}
+                                </a>
+                            </p>
+                            <p style="text-align: center;">
+                                <a href="javascript:void(0);" @click="clear()" class="btn btn-danger">清空</a>
+                            </p>
+                        </div>
+                    </div>
+            </div>
+
+            <div style="margin-top: 20px;">
+                <p>支持解析的视频地址格式:</p>
+                <ul style="word-break: break-all;">
+                    <li>http://www.toutiao.com/a6432825628286451970</li>
+                    <li>http://www.toutiao.com/group/6424719981140771330</li>
+                    <li>https://m.ixigua.com/group/6409452354789179905</li>
+                    <li>https://www.365yg.com/group/6432819732621984002</li>
+                    <li>http://m.365yg.com/a6426172164811374849</li>
+                    <li>https://m.365yg.com/item/6406641219442573826</li>
+                  </ul>
+
+                <p>常见疑问:</p>
+                <ol style="word-break: break-all;">
+                    <li>iOS设备（iPhone、iPad、iPod）上点击下载视频按钮后，跳转到视频页面，并没有直接下载，怎么办？</li>
+                    <p class="alert alert-info">因Safari及微信内置浏览器均不支持下载文件，所以保存视频需要借助第三方App来完成下载，建议iOS用户在App Store下载免费的Documents 6，然后在Documents的内置浏览器中使用本站，可以完美下载视频，并且Documents支持将下载的视频移到手机相册。</p>
+                    <li>我在电脑上用的是IE浏览器，点下载视频按钮后，出现跟上面那用iPad的哥们一样的情况，跳转到视频页面，如何下载到本地呢？</li>
+                    <p class="alert alert-info">电脑上少数浏览器不支持直接下载，但可以在下载视频按钮上点击右键，然后选择"目标另存为"或"链接存储为"来下载视频；或者到跳转后的视频页面，在视频画面上点击右键，然后选择"视频另存为"来下载视频。当然，我们更推荐在电脑上使用如谷歌Chrome浏览器、360浏览器极速模式、QQ浏览器极速模式等现代浏览器来获得最佳上网体验。</p>
+                    <li>解析后，发现有时候点"视频下载"，弹出来一个index.html名称的文件，或者跳转到403页面，然后再点一次就正常下载了，这是怎么回事？</li>
+                    <p class="alert alert-info">我们理解为是今日头条在限制用户下载视频，这是偶然的，所以一般多点几次下载按钮，总是会有一次能成功的。推荐在电脑上使用如谷歌Chrome浏览器、360浏览器极速模式、QQ浏览器极速模式等现代浏览器访问本站，<b>亲测，用这类浏览器的话，点视频下载按钮100%有效</b>，另外，在Android手机上用Chrome也是100%有效，省心。</p>
+                </ol>
+            </div>
+
+            <!-- COMMENT BEGIN -->
+            <div id="cloud-tie-wrapper" class="cloud-tie-wrapper"></div>
+            <!-- COMMENT END -->
+        </div>
+    </div>
+</div>
+
+
+<script src="https://cdn.staticfile.org/jquery/1.12.4/jquery.min.js"></script>
+<script src="http://apps.bdimg.com/libs/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+<script src="https://cdn.staticfile.org/vue/2.2.6/vue.min.js"></script>
+<script type="text/javascript">
+    var analyzeVideoUrl = "/video/toutiao";
+</script>
+<script src="http://kuaishou.iiilab.com/static/js/site.min.js?v9"></script>
+<script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+                (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+    ga('create', 'UA-98109640-5', 'auto');
+    ga('send', 'pageview');
+</script>
+<script>
+    var cloudTieConfig = {
+        url: "http://toutiao.iiilab.com/",
+        sourceId: "toutiao-video-download",
+        productKey: "c69a4343383a45c081a2b975e9938c37",
+        target: "cloud-tie-wrapper"
+    };
+</script>
+<script src="https://img1.cache.netease.com/f2e/tie/yun/sdk/loader.js"></script>
+</body>
+</html>
