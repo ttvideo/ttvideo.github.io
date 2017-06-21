@@ -101,7 +101,7 @@
             </div>
 
             <div style="margin-top: 20px;">
-                <p>支持解析的视频地址格式:</p>
+                <p>支持解析的视频地址格式:&nbsp;&nbsp;<a href="javascript:void(0);" @click="toggleAllSupportLink()" v-if="!showAllSupportLink">查看全部</a></p>
                 <ul style="word-break: break-all;">
                     <li>http://www.toutiao.com/a6432825628286451970</li>
                     <li>http://www.toutiao.com/group/6424719981140771330</li>
@@ -109,7 +109,11 @@
                     <li>https://www.365yg.com/group/6432221528678531330/</li>
                     <li>http://m.365yg.com/a6426172164811374849</li>
                     <li>https://m.365yg.com/item/6406641219442573826</li>
-                  </ul>
+                    <li v-if="!showAllSupportLink" @click="toggleAllSupportLink()"><a href="javascript:void(0);" title="查看全部">...</a></li>
+                    <li v-cloak v-if="showAllSupportLink">http://open.toutiao.com/i6414697321128264194</li>
+                    <li v-cloak v-if="showAllSupportLink">http://m.toutiao.org/item/6432544955679375873</li>
+                    <li v-cloak v-if="showAllSupportLink">http://m.pstatp.com/item/6406641219442573826</li>
+                </ul>
 
 
                 <p>常见疑问:</p>
