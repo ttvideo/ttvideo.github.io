@@ -8,7 +8,7 @@
     <meta name="keywords" content="下载今日头条视频,下载西瓜视频,阳光宽频网视频下载,保存今日头条视频到手机,下载西瓜视频到电脑,今日头条西瓜视频解析">
     <meta name="application-name" content="今日头条西瓜视频解析下载">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <meta name="referrer" content="no-referrer">
+    <meta name="referrer" content="never">
     <link href="http://apps.bdimg.com/libs/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet">
     <link href="http://kuaishou.iiilab.com/static/css/site.min.css?v3" rel="stylesheet">
     <link rel="shortcut icon" href="/static/img/favicon.ico">
@@ -83,13 +83,13 @@
                     <div class="thumbnail">
                         <div class="caption" style="padding:5px 0 0;">
                             <p style="text-align: center;">
-                                <a target="_blank" v-for="(item, index) in requestResult.video.download" :href="item.url" class="btn btn-success" @click="gaga('download', index)" download="今日头条西瓜视频解析下载.mp4">
+                                <a target="_blank" rel="noreferrer" v-for="(item, index) in requestResult.video.download" :href="item.url" class="btn btn-success" @click="gaga('download', index)" download="toutiao_iiilab.mp4">
                                     {{ item.type + "视频下载" }}
                                 </a>
                             </p>
                             <p style="word-break: break-all;"><span class="label label-default">视频名称</span> {{requestResult.text}}</p>
                             <p style="word-break: break-all;"><span class="label label-default">视频地址</span>
-                                <a target="_blank" v-for="(item, index) in requestResult.video.link" :href="item.url" @click="gaga('video-link', index)" class="label label-success">
+                                <a target="_blank" rel="noreferrer" v-for="(item, index) in requestResult.video.link" :href="item.url" @click="gaga('video-link', index)" class="label label-success">
                                     {{ item.buttonText }}
                                 </a>
                             </p>
@@ -141,7 +141,7 @@
 <script type="text/javascript">
     var analyzeVideoUrl = "/video/toutiao";
 </script>
-<script src="http://kuaishou.iiilab.com/static/js/site.min.js?v11"></script>
+<script src="http://kuaishou.iiilab.com/static/js/site.js?v11"></script>
 <script>
     (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
                 (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
