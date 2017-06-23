@@ -83,7 +83,7 @@
                     <div class="thumbnail">
                         <div class="caption" style="padding:5px 0 0;">
                             <p style="text-align: center;">
-                                <a target="_blank" rel="noreferrer" v-for="(item, index) in requestResult.video.download" :href="videoDownloadLink(item.url)" class="btn btn-success" @click="gaga('download', index)" download="toutiao_iiilab.mp4">
+                                <a target="_blank" rel="noreferrer" v-for="(item, index) in requestResult.video.download" :href="videoDownloadLink(item.url)" class="btn btn-success" @click="videoDownload(index, $event)" download="toutiao_iiilab.mp4">
                                     {{ item.type + "视频下载" }}
                                 </a>
                             </p>
