@@ -229,7 +229,7 @@
                     window.open(url);
                 }
 
-                window.event? window.event.returnValue = false : e.preventDefault();
+                e.preventDefault ? e.preventDefault() : (e.returnValue = false);
             },
             toggleAllSupportLink: function() {
                 this.showAllSupportLink = !this.showAllSupportLink;
