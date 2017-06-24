@@ -10,7 +10,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="referrer" content="never">
     <link href="http://apps.bdimg.com/libs/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet">
-    <link href="http://kuaishou.iiilab.com/static/css/site.min.css?v3" rel="stylesheet">
+    <link href="http://kuaishou.iiilab.com/static/css/site.min.css?v4" rel="stylesheet">
     <link rel="shortcut icon" href="/static/img/favicon.ico">
     <style type="text/css">
         .container .navbar-header .logo-img {
@@ -83,7 +83,7 @@
                     <div class="thumbnail">
                         <div class="caption" style="padding:5px 0 0;">
                             <p style="text-align: center;">
-                                <a target="_blank" rel="noreferrer" v-for="(item, index) in requestResult.video.download" :href="item.url" class="btn btn-success" @click="gaga('download', index)" download="toutiao_iiilab.mp4">
+                                <a target="_blank" rel="noreferrer" v-for="(item, index) in requestResult.video.download" :href="videoDownloadLink(item.url)" class="btn btn-success" @click="gaga('download', index)" download="toutiao_iiilab.mp4">
                                     {{ item.type + "视频下载" }}
                                 </a>
                             </p>
@@ -141,7 +141,7 @@
 <script type="text/javascript">
     var analyzeVideoUrl = "/video/toutiao";
 </script>
-<script src="http://kuaishou.iiilab.com/static/js/site.min.js?v11"></script>
+<script src="http://kuaishou.iiilab.com/static/js/site.min.js?v12"></script>
 <script>
     (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
                 (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
